@@ -602,35 +602,14 @@ body {
     }
 }
 /* ============================================================
-   LOOP BORDER SYSTEM 2026 - NEON LED (IPHONE STYLE REAL)
+   ATIVA APENAS EM NAVEGADORES MODERNOS (CHROME, EDGE)
+   SAFARI FICA FORA AUTOMATICAMENTE
    ============================================================ */
 
-html, body {
-    max-width: 100vw;
-    overflow-x: hidden;
-}
+@supports ((-webkit-mask-composite: xor) and (not (-webkit-touch-callout: none))) {
 
-/* =============================
-   ANIMAÇÃO DAS CORES
-   ============================= */
-@keyframes borderFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+/* ======= SEU CÓDIGO TODO AQUI DENTRO ======= */
 
-/* =============================
-   REFLEXO INTERNO (VIDRO)
-   ============================= */
-@keyframes innerGlowMove {
-    0% { opacity: 0.2; transform: translateX(-30%); }
-    50% { opacity: 0.6; }
-    100% { opacity: 0.2; transform: translateX(30%); }
-}
-
-/* =============================
-   BORDA PRINCIPAL (NEON)
-   ============================= */
 body::before {
     content: "";
     position: fixed;
@@ -641,27 +620,25 @@ body::before {
     border-radius: 30px;
     padding: 5px;
 
-    /* CORES TIPO IPHONE */
     background: linear-gradient(
         270deg,
-        #ff3b30,   /* vermelho */
-        #ff00ff,   /* magenta */
-        #007aff,   /* azul iOS */
-        #5ac8fa,   /* azul claro */
+        #ff3b30,
+        #ff00ff,
+        #007aff,
+        #5ac8fa,
         #ff3b30
     );
 
     background-size: 400% 400%;
     animation: borderFlow 5s ease infinite;
 
-    /* RECORTE */
     -webkit-mask:
         linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
+
     mask-composite: exclude;
 
-    /* 🔥 GLOW NEON REAL */
     box-shadow:
         0 0 8px rgba(0,122,255,0.6),
         0 0 20px rgba(0,122,255,0.4),
@@ -670,19 +647,15 @@ body::before {
     filter: saturate(1.4);
 }
 
-/* =============================
-   REFLEXO INTERNO (VIDRO CURVO)
-   ============================= */
 body::after {
     content: "";
     position: fixed;
-    inset: 4;
+    inset: 4px; /* corrigi aqui (faltava px) */
     z-index: 9999;
     pointer-events: none;
 
     border-radius: 30px;
 
-    /* REFLEXO CURVO */
     background: radial-gradient(
         circle at 30% 20%,
         rgba(255,255,255,0.4),
@@ -696,9 +669,7 @@ body::after {
     animation: innerGlowMove 6s ease-in-out infinite;
 }
 
-/* =============================
-   📱 IPHONE
-   ============================= */
+/* RESPONSIVO */
 @media (max-width: 430px) {
     body::before {
         inset: 2px;
@@ -711,9 +682,6 @@ body::after {
     }
 }
 
-/* =============================
-   💻 PC
-   ============================= */
 @media (min-width: 1025px) {
     body::before {
         inset: 3px;
@@ -724,4 +692,6 @@ body::after {
     body::after {
         border-radius: 30px;
     }
+}
+
 }
